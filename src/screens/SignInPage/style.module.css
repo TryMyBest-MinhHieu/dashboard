@@ -1,0 +1,84 @@
+.container {
+    @apply flex flex-col items-center justify-center h-full min-h-screen bg-blue-100 px-4;
+
+}
+
+.formWrapper {
+    @apply bg-white shadow-xl rounded-2xl p-6 w-full max-w-md mt-0 mx-auto;
+}
+
+.logo {
+    @apply flex justify-center mb-4;
+}
+
+.logoIcon {
+    @apply h-10 w-10;
+}
+
+.title {
+    @apply text-center text-lg font-semibold;
+}
+
+.subtitle {
+    @apply text-center text-gray-500 text-sm;
+}
+
+.form {
+    @apply mt-4;
+}
+
+.inputGroup {
+    @apply flex flex-col mb-2;
+}
+
+.inputWrapper {
+    @apply relative;
+}
+
+.inputField {
+    @apply border border-gray-300 rounded-lg p-2 w-full pl-12;
+}
+
+.inputIcon {
+    @apply absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400;
+}
+
+.passwordToggle {
+    @apply absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 cursor-pointer;
+}
+
+.errorText {
+    @apply text-red-500 text-sm;
+}
+
+.forgotPassword {
+    @apply block text-right text-sm text-gray-900 cursor-pointer mt-2 sm:mt-1;
+}
+
+.submitButton {
+    @apply w-full bg-black text-white p-3 rounded-lg text-center;
+}
+
+.separator {
+    @apply flex items-center my-4;
+}
+
+.separatorLine {
+    @apply flex-1 border-t border-gray-300;
+}
+
+.separatorText {
+    @apply px-2 text-gray-500 text-sm;
+}
+
+.socialButtons {
+    @apply flex justify-center gap-4;
+}
+
+.socialButton {
+    @apply p-2 w-full sm:w-1/3 border border-gray-300 rounded-lg cursor-pointer flex items-center justify-center bg-gray-100 shadow-md;
+}
+
+.socialIcon {
+    @apply h-5 w-5;
+}
