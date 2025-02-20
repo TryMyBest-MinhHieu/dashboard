@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { IEmail, IPassword, ILogoSignIn, IFacebook, IGoogle, IApple, IEye, IEyeOff } from "@/assets";
 import styles from "./style.module.css";
+import { useRouter } from "next/navigation";
 
 interface IFormInput {
     email: string;
@@ -30,11 +31,16 @@ const SignInPage = () => {
         resolver: zodResolver(formSchema),
     });
 
+    const router = useRouter();
     const { register, handleSubmit, formState: { errors } } = form;
     const [showPassword, setShowPassword] = useState(false);
 
     function onSubmit(values: IFormInput) {
-        console.log(values)
+        console.log("Đăng nhập thành công!", values);
+
+        setTimeout(() => {
+            router.push("/dashboard");
+        }, 1000);
     }
 
     return (
