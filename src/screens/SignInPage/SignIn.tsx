@@ -35,12 +35,40 @@ const SignInPage = () => {
     const { register, handleSubmit, formState: { errors } } = form;
     const [showPassword, setShowPassword] = useState(false);
 
-    function onSubmit(values: IFormInput) {
-        console.log("Đăng nhập thành công!", values);
+    const [loading, setLoading] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
 
-        setTimeout(() => {
-            router.push("/dashboard");
-        }, 1000);
+    async function onSubmit(values: IFormInput) {
+        setLoading(true);
+        setErrorMessage(""); 
+
+        try {
+            const response = await fetch("http://localhost:4000/auth/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(values),
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.message || "Đăng nhập thất bại");
+            }
+
+            // Lưu token vào sessionStorage
+            sessionStorage.setItem("token", data.data.token);
+            sessionStorage.setItem("user", JSON.stringify(data.data.account));
+
+            console.log("Đăng nhập thành công!", data);
+
+            router.push("/");
+        } catch (error: any) {
+            setErrorMessage(error.message || "Đã xảy ra lỗi");
+        } finally {
+            setLoading(false);
+        }
     }
 
     return (
@@ -93,11 +121,14 @@ const SignInPage = () => {
                             {errors.password && <p className={styles.errorText}>{errors.password.message}</p>}
                         </div>
 
+                        {/* Hiển thị lỗi khi đăng nhập thất bại */}
+                        {errorMessage && <p className={styles.errorText}>{errorMessage}</p>}
+
                         {/* Forgot Password */}
                         <Link href="/" className={styles.forgotPassword}>Forgot password?</Link>
 
-                        <Button type="submit" className={styles.submitButton}>
-                            Get Started
+                        <Button type="submit" className={styles.submitButton} disabled={loading}>
+                            {loading ? "Loading..." : "Get Started"}
                         </Button>
                     </form>
                 </Form>
@@ -111,15 +142,15 @@ const SignInPage = () => {
 
                 {/* Social Buttons */}
                 <div className={styles.socialButtons}>
-                    <button className={styles.socialButton}>
+                    <Link href="https://www.google.com" className={styles.socialButton}>
                         <IGoogle className={styles.socialIcon} />
-                    </button>
-                    <button className={styles.socialButton}>
+                    </Link>
+                    <Link href="https://www.google.com" className={styles.socialButton}>
                         <IFacebook className={styles.socialIcon} />
-                    </button>
-                    <button className={styles.socialButton}>
+                    </Link>
+                    <Link href="https://www.google.com" className={styles.socialButton}>
                         <IApple className={styles.socialIcon} />
-                    </button>
+                    </Link>
                 </div>
             </div>
         </div>

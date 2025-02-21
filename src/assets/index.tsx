@@ -6,3 +6,4 @@ export { default as IGoogle } from "./icons/google.svg";
 export { default as IApple } from "./icons/apple.svg";
 export { default as IEye } from "./icons/Eye.svg";
 export { default as IEyeOff } from "./icons/EyeClose.svg";
+export { default as ITextDel } from "./icons/textdelete.svg";
