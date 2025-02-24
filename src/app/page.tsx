@@ -3,7 +3,7 @@
 export default function Home() {
   return (
     <div>
-      Dashboard
+      <button>go on </button>
     </div>
   );
 }

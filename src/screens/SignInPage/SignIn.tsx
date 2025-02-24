@@ -9,6 +9,8 @@ import { Form } from "@/components/ui/form";
 import { IEmail, IPassword, ILogoSignIn, IFacebook, IGoogle, IApple, IEye, IEyeOff } from "@/assets";
 import styles from "./style.module.css";
 import { useRouter } from "next/navigation";
+import { setCookie } from "cookies-next";
+import { InputComponent } from "@/components/InputComponent";
 
 interface IFormInput {
     email: string;
@@ -40,7 +42,7 @@ const SignInPage = () => {
 
     async function onSubmit(values: IFormInput) {
         setLoading(true);
-        setErrorMessage(""); 
+        setErrorMessage("");
 
         try {
             const response = await fetch("http://localhost:4000/auth/login", {
@@ -57,9 +59,9 @@ const SignInPage = () => {
                 throw new Error(data.message || "Đăng nhập thất bại");
             }
 
-            // Lưu token vào sessionStorage
-            sessionStorage.setItem("token", data.data.token);
-            sessionStorage.setItem("user", JSON.stringify(data.data.account));
+            // Lưu token vào cookie
+            setCookie("token", data.data.token, { maxAge: 60 * 60 * 3 });
+            setCookie("user", JSON.stringify(data.data.account), { maxAge: 60 * 60 * 3 });
 
             console.log("Đăng nhập thành công!", data);
 
@@ -85,7 +87,7 @@ const SignInPage = () => {
                 <Form {...form}>
                     <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
                         {/* Email Input */}
-                        <div className={styles.inputGroup}>
+                        {/* <div className={styles.inputGroup}>
                             <div className={styles.inputWrapper}>
                                 <input
                                     id="email"
@@ -97,10 +99,10 @@ const SignInPage = () => {
                                 <IEmail className={styles.inputIcon} />
                             </div>
                             {errors.email && <p className={styles.errorText}>{errors.email.message}</p>}
-                        </div>
+                        </div> */}
 
                         {/* Password Input */}
-                        <div className={styles.inputGroup}>
+                        {/* <div className={styles.inputGroup}>
                             <div className={styles.inputWrapper}>
                                 <input
                                     id="password"
@@ -119,6 +121,43 @@ const SignInPage = () => {
                                 </button>
                             </div>
                             {errors.password && <p className={styles.errorText}>{errors.password.message}</p>}
+                        </div> */}
+
+                        {/* Email Input */}
+                        <div className={styles.inputGroup}>
+                            <div className={styles.inputWrapper}>
+                                <IEmail className={styles.inputIcon} />
+                                <InputComponent
+                                    id="email"
+                                    type="email"
+                                    placeholder="Enter your email"
+                                    register={register("email")}
+                                    error={errors.email?.message}
+                                    className={styles.inputField}
+                                />
+                            </div>
+                        </div>
+
+                        {/* Password Input */}
+                        <div className={styles.inputGroup}>
+                            <div className={styles.inputWrapper}>
+                                <IPassword className={styles.inputIcon} />
+                                <InputComponent
+                                    id="password"
+                                    type={showPassword ? "text" : "password"}
+                                    placeholder="Enter your password"
+                                    register={register("password")}
+                                    error={errors.password?.message}
+                                    className={styles.inputField}
+                                />
+                                <button
+                                    type="button"
+                                    onClick={() => setShowPassword(!showPassword)}
+                                    className={styles.passwordToggle}
+                                >
+                                    {showPassword ? <IEyeOff /> : <IEye />}
+                                </button>
+                            </div>
                         </div>
 
                         {/* Hiển thị lỗi khi đăng nhập thất bại */}
