@@ -26,7 +26,7 @@ const InputComponent: React.FC<InputProps> = ({ id, type, placeholder, register,
                     placeholder={placeholder}
                     value={inputValue}
                     onChange={(e) => setInputValue(e.target.value)}
-                    className="w-[92%] p-2 border border-gray-300 rounded-lg pl-12 pr-10"
+                    className="w-[92%] p-2 "
                 />
 
                 {inputValue && (
