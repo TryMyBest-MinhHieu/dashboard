@@ -3,7 +3,7 @@ import { useState } from "react";
 // import { motion } from "framer-motion";
 // import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from 'framer-motion';
-import { navItems } from "./helper";
+import { navItems, getMenuIcon, menuIcons } from "./helper";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
@@ -17,7 +17,6 @@ import {
     IconShoppingCart,
     Logo
 } from "../../assets/index";
-
 
 const Header = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -37,14 +36,15 @@ const Header = () => {
                     <IconMenu />
                 </button>
                 {/* Logo */}
-                <Link href="/">
-                    <Image src={Logo}
-                        alt="Logo"
-                        width={120}
-                        height={40}
-                        className="flex items-center"
-                    />
-                </Link>
+                <div className="flex-1 flex justify-center md:flex-none md:justify-start">
+                    <Link href="/">
+                        <Image src={Logo}
+                            alt="Logo"
+                            width={120}
+                            height={40}
+                        />
+                    </Link>
+                </div>
 
                 {/* Desktop Menu */}
                 <nav className="hidden md:flex items-center align-center space-x-6">
@@ -72,17 +72,20 @@ const Header = () => {
                 {/* Icons */}
                 <div className="flex space-x-4">
                     <Link href="/">
-                        <IconAccount />
-                    </Link>
-                    <Link href="/">
                         <IconSearch />
                     </Link>
-                    <Link href="/">
-                        <IconHeart />
-                    </Link>
-                    <Link href="/">
-                        <IconShoppingCart />
-                    </Link>
+
+                    <div className="hidden md:flex space-x-4">
+                        <Link href="/">
+                            <IconAccount />
+                        </Link>
+                        <Link href="/">
+                            <IconHeart />
+                        </Link>
+                        <Link href="/">
+                            <IconShoppingCart />
+                        </Link>
+                    </div>
                 </div>
 
             </div>
@@ -91,58 +94,89 @@ const Header = () => {
             <AnimatePresence>
                 {isMenuOpen && (
                     <motion.div
-                        // className="fixed inset-0 bg-white flex flex-col p-6 md:hidden"
-                        className="fixed top-0 left-0 w-2/3 h-full bg-yellow-200 flex flex-col p-6 md:hidden"
+                        className="fixed inset-0 bg-[#F7F7F9] flex flex-col p-9 md:hidden overflow-y-auto max-h-screen"
                         initial={{ x: "-100%" }}
                         animate={{ x: 0 }}
                         exit={{ x: "-100%" }}
                         transition={{ duration: 0.3 }}
                     >
-                        <button className="self-end mb-4"
-                            onClick={toggleMobileMenu}>
+                        {/* Nút đóng menu */}
+                        <button className="self-end mb-4" onClick={toggleMobileMenu}>
                             <IconClose />
                         </button>
+
+                        {/* Menu chính */}
                         <nav className="flex flex-col space-y-4">
-                            {navItems.map((item, index) => (
-                                <div key={index}>
-                                    <div className="flex justify-between items-center">
-                                        <Link href={item.path} className="text-lg text-gray-800">
-                                            {item.title}
-                                        </Link>
-                                        {item.submenu && (
-                                            <button onClick={() => toggleSubmenu(index)}>
-                                                <IconArrowNext
-                                                    className={cn(
-                                                        "w-5 h-5 text-gray-600 transition-transform duration-300",
-                                                        openSubmenu === index && "rotate-180"
-                                                    )}
-                                                />
-                                            </button>
-                                        )}
+                            {navItems.map((item, index) => {
+                                const Icon = getMenuIcon(item.title);
+
+                                return (
+                                    <div key={index}>
+                                        {/* Mục menu chính */}
+                                        <div className="flex justify-between items-center">
+                                            <Link href={item.path} className="text-lg text-gray-800 flex items-center space-x-2">
+                                                {Icon && <Icon className="w-5 h-5 text-gray-600" />}
+                                                <span>{item.title}</span>
+                                            </Link>
+                                            {item.submenu && (
+                                                <button onClick={() => toggleSubmenu(index)}>
+                                                    <IconArrowNext
+                                                        className={cn(
+                                                            "w-5 h-5 text-gray-600 transition-transform duration-300",
+                                                            openSubmenu === index && "rotate-90"
+                                                        )}
+                                                    />
+                                                </button>
+                                            )}
+                                        </div>
+
+                                        {/* Submenu */}
+                                        <AnimatePresence>
+                                            {openSubmenu === index && (
+                                                <motion.div
+                                                    initial={{ height: 0, opacity: 0 }}
+                                                    animate={{ height: "auto", opacity: 1 }}
+                                                    exit={{ height: 0, opacity: 0 }}
+                                                    className="ml-4 mt-2 space-y-2"
+                                                >
+                                                    {item.submenu?.map((sub, subIndex) => {
+                                                        const SubIcon = getMenuIcon(sub.title);
+
+                                                        return (
+                                                            <Link key={subIndex} href={sub.path} className="flex items-center space-x-2 text-gray-700">
+                                                                {SubIcon && <SubIcon className="w-5 h-5 text-gray-500" />}
+                                                                <span>{sub.title}</span>
+                                                            </Link>
+                                                        );
+                                                    })}
+                                                </motion.div>
+                                            )}
+                                        </AnimatePresence>
                                     </div>
-                                    <AnimatePresence>
-                                        {openSubmenu === index && (
-                                            <motion.div
-                                                initial={{ height: 0, opacity: 0 }}
-                                                animate={{ height: "auto", opacity: 1 }}
-                                                exit={{ height: 0, opacity: 0 }}
-                                                className="ml-4 mt-2 space-y-2"
-                                            >
-                                                {item.submenu?.map((sub, subIndex) => (
-                                                    <Link key={subIndex} href={sub.path} className="block text-gray-700">
-                                                        {sub.title}
-                                                    </Link>
-                                                ))}
-                                            </motion.div>
-                                        )}
-                                    </AnimatePresence>
-                                </div>
-                            ))}
+                                );
+                            })}
                         </nav>
+
+                        {/* Dòng phân cách */}
+                        <hr className="border-t border-gray-300 my-4" />
+
+                        {/* Các icon tài khoản, wishlist, giỏ hàng */}
+                        <div className="mt-6 flex flex-col space-y-4">
+                            {menuIcons.map((item, index) => {
+                                const Icon = item.icon;
+
+                                return (
+                                    <Link key={index} href={item.path} className="flex items-center space-x-2 text-gray-800">
+                                        <Icon className="w-5 h-5 text-gray-600" />
+                                        <span>{item.title}</span>
+                                    </Link>
+                                );
+                            })}
+                        </div>
+
                     </motion.div>
                 )}
             </AnimatePresence>
-
         </header >
     );
 };
