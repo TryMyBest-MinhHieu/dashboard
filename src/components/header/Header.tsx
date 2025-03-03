@@ -92,7 +92,7 @@ const Header = () => {
                 {isMenuOpen && (
                     <motion.div
                         // className="fixed inset-0 bg-white flex flex-col p-6 md:hidden"
-                        className="fixed top-0 left-0 w-2/3 h-full bg-blue-200 flex flex-col p-6 md:hidden"
+                        className="fixed top-0 left-0 w-2/3 h-full bg-yellow-200 flex flex-col p-6 md:hidden"
                         initial={{ x: "-100%" }}
                         animate={{ x: 0 }}
                         exit={{ x: "-100%" }}
