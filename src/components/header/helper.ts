@@ -2,60 +2,60 @@ import { User, Heart, ShoppingCart, Users, Package, Factory, Newspaper, Phone, F
 
 export const navItems = [
   {
-    title: "VỀ CHÚNG TÔI",
+    title: "Về chúng tôi",
     path: "#",
     submenu: [
-      { title: "GIỚI THIỆU", path: "/" },
-      { title: "HỒ SƠ NĂNG LỰC", path: "/" },
+      { title: "Giới thiệu", path: "/" },
+      { title: "Hồ sơ năng lực", path: "/" },
     ],
   },
   {
-    title: "SẢN PHẨM",
+    title: "Sản phẩm",
     path: "#",
     submenu: [
-      { title: "NƯỚC GIẶT XẢ", path: "/" },
-      { title: "NƯỚC LAU SÀN", path: "/" },
-      { title: "NƯỚC RỬA CHÉN", path: "/" },
-      { title: "NƯỚC LAU BẾP ĐA NĂNG", path: "/" },
-      { title: "NƯỚC LAU KÍNH ĐA NĂNG", path: "/" },
-      { title: "NƯỚC TẨY", path: "/" },
+      { title: "Nước giặt xả", path: "/" },
+      { title: "Nước lau sàn", path: "/" },
+      { title: "Nước rửa chén", path: "/" },
+      { title: "Nước lau bếp đa năng", path: "/" },
+      { title: "Nước lau kính đa năng", path: "/" },
+      { title: "Nước tẩy", path: "/" },
     ],
   },
-  { title: "GIA CÔNG HÓA PHẨM", path: "/" },
-  { title: "TIN TỨC", path: "/" },
-  { title: "LIÊN HỆ", path: "/" },
+  { title: "Gia công hóa phẩm", path: "/" },
+  { title: "Tin tức", path: "/" },
+  { title: "Liên hệ", path: "/" },
 ];
 
 export const getMenuIcon = (title: string) => {
   switch (title) {
     // Icons cho menu chính
-    case "VỀ CHÚNG TÔI":
+    case "Về chúng tôi":
       return Users;
-    case "SẢN PHẨM":
+    case "Sản phẩm":
       return Package;
-    case "GIA CÔNG HÓA PHẨM":
+    case "Gia công hóa phẩm":
       return Factory;
-    case "TIN TỨC":
+    case "Tin tức":
       return Newspaper;
-    case "LIÊN HỆ":
+    case "Liên hệ":
       return Phone;
 
     // Icons cho submenu
-    case "GIỚI THIỆU":
+    case "Giới thiệu":
       return FileText;
-    case "HỒ SƠ NĂNG LỰC":
+    case "Hồ sơ năng lực":
       return FileText;
-    case "NƯỚC GIẶT XẢ":
+    case "Nước giặt xả":
       return FlaskConical;
-    case "NƯỚC LAU SÀN":
+    case "Nước lau sàn":
       return Brush;
-    case "NƯỚC RỬA CHÉN":
+    case "Nước rửa chén":
       return GlassWater;
-    case "NƯỚC LAU BẾP ĐA NĂNG":
+    case "Nước lau bếp đa năng":
       return FlaskConical;
-    case "NƯỚC LAU KÍNH ĐA NĂNG":
+    case "Nước lau kính đa năng":
       return FlaskConical;
-    case "NƯỚC TẨY":
+    case "Nước tẩy":
       return Droplets;
     default:
       return null;

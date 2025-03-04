@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Open_Sans, Montserrat } from "next/font/google";
 import './globals.css'
 import { cn } from "@/lib/utils";
+import { HeaderClient } from "@/components/header";
 
 const open_Sans = Open_Sans({
   variable: "--font-open-sans",
@@ -30,7 +31,8 @@ export default function RootLayout({
       <body
         className={cn(`${open_Sans.variable} ${montserrat.variable}`)}
       >
-        <main>{children}</main>
+        <HeaderClient />
+        <main className="pt-[70px]">{children}</main>
       </body>
     </html>
   );

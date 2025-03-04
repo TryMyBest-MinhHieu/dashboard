@@ -14,6 +14,7 @@ export { default as IconShoppingCart } from './icons/shoppingcart.svg';
 export { default as IconSearch } from './icons/search.svg';
 export { default as IconAccount } from './icons/account.svg';
 export { default as IconHeart } from './icons/heart.svg';
-
+export { default as IconFiltering } from './icons/filtering.svg'
 
 export { default as Logo } from './images/Frame.png';
+export { default as Rectangle } from "./images/Rectangle1.png"
