@@ -21,10 +21,16 @@ import {
 const Header = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [openSubmenu, setOpenSubmenu] = useState<number | null>(null);
+    const [isSearchOpen, setIsSearchOpen] = useState(false);
+
     const toggleMobileMenu = () => setIsMenuOpen(!isMenuOpen);
+
     const toggleSubmenu = (index: number) => {
         setOpenSubmenu(openSubmenu === index ? null : index);
     };
+
+    const toggleSearch = () => setIsSearchOpen(!isSearchOpen);
+
     return (
         <header className="fixed top-0 left-0 w-full bg-white shadow-md z-50">
 
@@ -50,7 +56,7 @@ const Header = () => {
                 <nav className="hidden md:flex items-center align-center space-x-6">
                     {navItems.map((item, index) => (
                         <div key={index} className="relative group">
-                            <Link href={item.path} className="text-gray-700 hover:text-black flex items-center space-x-1">
+                            <Link href={item.path} className="text-gray-700 hover:text-black flex items-center space-x-1 text-base">
                                 <span>{item.title}</span>
                                 {item.submenu && (
                                     <IconArrowNext className="w-4 h-4 text-gray-500 transition-transform duration-300 group-hover:rotate-180" />
@@ -59,7 +65,7 @@ const Header = () => {
                             {item.submenu && (
                                 <div className="absolute left-0 top-full mt-2 w-57 bg-white shadow-md rounded-md opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 flex flex-col">
                                     {item.submenu.map((sub, subIndex) => (
-                                        <Link key={subIndex} href={sub.path} className="block px-4 py-2 whitespace-nowrap text-gray-700 hover:bg-gray-100">
+                                        <Link key={subIndex} href={sub.path} className="block px-4 py-2 whitespace-nowrap text-gray-700 hover:bg-gray-100 text-base">
                                             {sub.title}
                                         </Link>
                                     ))}
@@ -71,9 +77,10 @@ const Header = () => {
 
                 {/* Icons */}
                 <div className="flex space-x-4">
-                    <Link href="/">
+                    <button onClick={toggleSearch} className="relative">
                         <IconSearch />
-                    </Link>
+                    </button>
+
 
                     <div className="hidden md:flex space-x-4">
                         <Link href="/">
@@ -89,6 +96,47 @@ const Header = () => {
                 </div>
 
             </div>
+
+            {/* Search Mobile */}
+            <AnimatePresence>
+                {isSearchOpen && (
+                    <motion.div
+                        initial={{ x: "100%" }}
+                        animate={{ x: 0 }}
+                        exit={{ x: "100%" }}
+                        transition={{ duration: 0.3 }}
+                        className="absolute inset-0 bg-white flex items-center md:justify-center px-4"
+                    >
+                        <input
+                            type="text"
+                            placeholder="Tìm kiếm..."
+                            className="w-full md:w-[40%] border-b-2 border-gray-300 focus:outline-none"
+                        />
+                        <button onClick={toggleSearch} className="ml-2">
+                            <IconClose />
+                        </button>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
+            {/* Search Desktop */}
+            {/* <AnimatePresence>
+                {isSearchOpen && (
+                    <motion.div
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        transition={{ duration: 0.3 }}
+                        className="absolute top-full right-0 mt-2 bg-white p-2 shadow-lg"
+                    >
+                        <input
+                            type="text"
+                            placeholder="Tìm kiếm..."
+                            className="border p-2 rounded-md"
+                        />
+                    </motion.div>
+                )}
+            </AnimatePresence> */}
 
             {/* Mobile Menu */}
             <AnimatePresence>
@@ -114,7 +162,7 @@ const Header = () => {
                                     <div key={index}>
                                         {/* Mục menu chính */}
                                         <div className="flex justify-between items-center">
-                                            <Link href={item.path} className="text-lg text-gray-800 flex items-center space-x-2">
+                                            <Link href={item.path} className="text-lg text-gray-800 flex items-center space-x-2 text-base">
                                                 {Icon && <Icon className="w-5 h-5 text-gray-600" />}
                                                 <span>{item.title}</span>
                                             </Link>
@@ -143,7 +191,7 @@ const Header = () => {
                                                         const SubIcon = getMenuIcon(sub.title);
 
                                                         return (
-                                                            <Link key={subIndex} href={sub.path} className="flex items-center space-x-2 text-gray-700">
+                                                            <Link key={subIndex} href={sub.path} className="flex items-center space-x-2 text-gray-700 text-base">
                                                                 {SubIcon && <SubIcon className="w-5 h-5 text-gray-500" />}
                                                                 <span>{sub.title}</span>
                                                             </Link>
@@ -166,7 +214,7 @@ const Header = () => {
                                 const Icon = item.icon;
 
                                 return (
-                                    <Link key={index} href={item.path} className="flex items-center space-x-2 text-gray-800">
+                                    <Link key={index} href={item.path} className="flex items-center space-x-2 text-gray-800 text-base">
                                         <Icon className="w-5 h-5 text-gray-600" />
                                         <span>{item.title}</span>
                                     </Link>

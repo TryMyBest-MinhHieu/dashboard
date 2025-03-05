@@ -93,6 +93,6 @@ body {
   h4,
   h5,
   h6 {
-    @apply text-5xl;
+    @apply text-3xl;
   }
 }

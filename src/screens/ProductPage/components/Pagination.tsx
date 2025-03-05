@@ -1,61 +1,43 @@
-'use client';
-
-import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 interface PaginationProps {
-    totalPages: number;
     currentPage: number;
+    totalPages: number;
     onPageChange: (page: number) => void;
 }
 
-export function Pagination({ totalPages, currentPage, onPageChange }: PaginationProps) {
-    const pageNumbers = Array.from({ length: Math.min(4, totalPages) }, (_, index) => {
-        const page = Math.min(currentPage - (currentPage % 4) + index + 1, totalPages);
-        return page;
-    });
-
+const Pagination = ({ currentPage, totalPages, onPageChange }: PaginationProps) => {
     return (
-        <div className="flex justify-center mt-6 space-x-2">
-            {/* Nút Previous */}
-            <Button
-                variant="outline"
+        <div className="flex justify-center items-center mt-6 space-x-2">
+            <button
+                className={`px-3 py-1 border rounded-md flex items-center gap-1 ${currentPage === 1 ? "text-gray-400 cursor-not-allowed" : "hover:bg-gray-200"}`}
+                onClick={() => onPageChange(currentPage - 1)}
                 disabled={currentPage === 1}
-                onClick={() => onPageChange(1)}
-                className="flex items-center gap-2"
             >
-                <ChevronLeft size={16} />
+                <ChevronLeft size={18} />
                 Previous
-            </Button>
+            </button>
 
-            {/* Hiển thị số trang */}
-            {pageNumbers.map((page) => (
-                <Button
-                    key={page}
-                    variant="outline"
-                    onClick={() => onPageChange(page)}
-                    className={cn(
-                        "px-4 py-2 rounded-md transition-colors",
-                        currentPage === page
-                            ? "bg-gray-900 text-white font-bold"  // Khi được chọn
-                            : "bg-white text-gray-900 hover:bg-gray-200" // Khi chưa chọn
-                    )}
+
+            {[...Array(totalPages)].map((_, index) => (
+                <button
+                    key={index}
+                    className={`px-3 py-1 border rounded-md ${currentPage === index + 1 ? "bg-gray-300" : "bg-white hover:bg-gray-200"}`}
+                    onClick={() => onPageChange(index + 1)}
                 >
-                    {page}
-                </Button>
+                    {index + 1}
+                </button>
             ))}
-
-            {/* Nút End */}
-            <Button
-                variant="outline"
+            <button
+                className={`px-3 py-1 border rounded-md flex items-center gap-1 ${currentPage === totalPages ? "text-gray-400 cursor-not-allowed" : "hover:bg-gray-200"}`}
+                onClick={() => onPageChange(currentPage + 1)}
                 disabled={currentPage === totalPages}
-                onClick={() => onPageChange(totalPages)}
-                className="flex items-center gap-2"
             >
-                End
-                <ChevronRight size={16} />
-            </Button>
+                Next
+                <ChevronRight size={18} />
+            </button>
         </div>
     );
-}
+};
+
+export default Pagination;

@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from "next/image";
+import { StarRating } from "../starRating";
 
 interface Product {
   name: string;
@@ -29,15 +30,15 @@ interface ProductCardProps {
 }
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   return (
-    <div className="w-full max-w-[250px] bg-white shadow-lg rounded-lg overflow-hidden">
+    <div className="border rounded-lg p-4 shadow-md">
       {/* Hình ảnh sản phẩm */}
-      <div className="relative">
+      <div className="relative w-full h-60">
         <Image
           src={product.createImageProducts?.[0]?.link || "/default-image.jpg"}
           alt={product.name}
-          width={200}
-          height={180}
-          className="w-full h-40 object-cover"
+          layout="fill"
+          objectFit="cover"
+          className="rounded-lg"
         />
 
         {/* Nhãn HOT */}
@@ -46,20 +47,28 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             HOT
           </div>
         )}
+
       </div>
 
-      {/* Thông tin sản phẩm */}
-      <div className="p-3">
-        <h3 className="text-sm font-bold">{product.name}</h3>
-        <p className="text-gray-500 text-xs truncate">{product.description}</p>
-        <div className="mt-1">
-          <span className="text-sm font-bold text-black">
-            VNĐ {product.promotionPrice.toLocaleString()}
-          </span>
-          <span className="text-gray-400 text-xs line-through ml-1">
-            VNĐ {product.price.toLocaleString()}
-          </span>
-        </div>
+      {/* Tên sản phẩm */}
+      <h3 className="mt-3 text-lg font-semibold text-gray-800">
+        {product.name}
+      </h3>
+
+      {/* Mô tả ngắn */}
+      <p className="text-gray-600 text-sm mt-1">{product.description}</p>
+
+      {/* Đánh giá sao */}
+      <div className="mt-2">
+        <StarRating rating={product.star} />
+      </div>
+
+      {/* Giá sản phẩm */}
+      <div className="mt-2 flex items-center space-x-2">
+        <span className="text-lg font-bold text-red-500">
+          VNĐ {product.promotionPrice}
+        </span>
+        <span className="text-gray-500 line-through"> VNĐ {product.price}</span>
       </div>
     </div>
   );
@@ -67,3 +76,4 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
 
 export default ProductCard;
+

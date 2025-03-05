@@ -1,13 +1,13 @@
 'use client';
 
+import { IconFiltering } from '@/assets';
 import { ProductCard } from '@/components/product';
-import React, { useState } from 'react';
-import { products } from "./hepler";
 import Image from 'next/image';
 import Link from 'next/link';
+import { useState } from 'react';
 import Breadcrumb from "./components/Breadcrumb";
-import { Pagination } from './components/Pagination';
-import { motion } from "framer-motion";
+import { products } from "./hepler";
+import Pagination from "./components/Pagination";
 
 function ProductPage() {
     const itemsPerPage = 12;
@@ -42,10 +42,14 @@ function ProductPage() {
             </section>
 
             {/* Bộ lọc & sắp xếp */}
-            <section className="flex justify-between items-center py-7">
-                <button className="px-4 py-2 border rounded-md">Filter</button>
-                <div className="flex items-center space-x-4">
-                    <p>Showing {startIndex + 1}-{endIndex} of {totalProducts} products</p>
+            <section className="flex items-center justify-between py-7">
+                <div className="flex items-center space-x-2">
+                    <IconFiltering />
+                    <button className="px-4 py-2 rounded-md">Filter</button>
+                    <p className="text-gray-700">Showing {startIndex + 1}-{endIndex} of {totalProducts} products</p>
+                </div>
+
+                <div>
                     <select className="border px-3 py-2 rounded-md">
                         <option>Default</option>
                         <option>Price: Low to High</option>
@@ -54,25 +58,20 @@ function ProductPage() {
                 </div>
             </section>
 
+            {/* Products */}
             <section>
-                <motion.div
-                    className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5 }}
-                >
+                {/* <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"> */}
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                     {displayedProducts.map((product, index) => (
                         <ProductCard key={index} product={product} />
                     ))}
-                </motion.div>
+                </div>
             </section>
 
             {/* Phân trang */}
-            <Pagination
-                totalPages={totalPages}
-                currentPage={currentPage}
-                onPageChange={setCurrentPage}
-            />
+            <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
+
+
         </div>
     );
 }
