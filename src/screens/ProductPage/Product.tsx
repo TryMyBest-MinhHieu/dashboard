@@ -6,7 +6,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 import Breadcrumb from "./components/Breadcrumb";
-import { products } from "./hepler";
+import { products } from "./helper";
 import Pagination from "./components/Pagination";
 
 function ProductPage() {
