@@ -1,2 +1,2 @@
-import StarRating from './StartRating';
-export { StarRating };
+import renderStarRating from "./StartRating";
+export { renderStarRating };
