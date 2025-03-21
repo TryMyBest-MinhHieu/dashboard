@@ -16,10 +16,6 @@ function Post() {
   }, []);
   return (
     <div>
-      {buttons.map((btn, index) => {
-        <button key={index}>{btn}</button>;
-      })}
-
       {posts.map((post: any) => (
         <div key={post.id}>
           <h1>{post.title}</h1>
